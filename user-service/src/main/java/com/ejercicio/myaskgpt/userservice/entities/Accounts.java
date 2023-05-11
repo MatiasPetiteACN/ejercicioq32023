@@ -48,6 +48,11 @@ public class Accounts implements Serializable {
 		this.password = password;
 		this.enabled = true;
 	}
+	
+	public Accounts() {
+		super();
+		this.enabled = true;
+	}
 
 	public String getUsername() {
 		return username;
