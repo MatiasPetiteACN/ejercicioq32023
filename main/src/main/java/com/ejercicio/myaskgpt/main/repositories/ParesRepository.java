@@ -12,7 +12,7 @@ public interface ParesRepository extends CrudRepository<Pares, Long>{
 
 	public List<Pares> findAll();
 	
-	public Pares findByID(long id);
+	public Pares findByParID(long id);
 	
 	public Pares findByPregunta(String pregunta);
 }

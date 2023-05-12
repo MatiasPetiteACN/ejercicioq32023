@@ -13,7 +13,7 @@ public class UserMethodsService {
 	@Autowired
 	ParesService paresService;
 	
-	List<Pares> allPares = paresService.findAll();
+	//
 	
 	//metodo hacer respuesta, recibe una pregunta, la busca en el allPares y devuelve la respuesta asociada 
 	//si no la encuentra devuelve excepcion(hacer)
@@ -23,6 +23,8 @@ public class UserMethodsService {
 		Pares par = new Pares();
 		
 		par.setPregunta(pregunta);
+		
+		List<Pares> allPares = paresService.findAll();
 		
 		//Agregar aca lo de la deuda
 		

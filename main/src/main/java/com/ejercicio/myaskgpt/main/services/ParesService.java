@@ -16,7 +16,7 @@ public class ParesService {
 		
 		Pares par = new Pares();
 				
-		Pares repoReturn = paresRepostory.findByID(ID);
+		Pares repoReturn = paresRepostory.findByParID(ID);
 		
 		par = repoReturn;
 		

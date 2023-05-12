@@ -10,11 +10,12 @@ import com.ejercicio.myaskgpt.userservice.repositories.AccountsRepository;
 @Service
 public class AccountsService {
 
-	AccountsRepository accountsRepository;
-	
-	List<Accounts> allAccounts = accountsRepository.findAll();
+	private AccountsRepository accountsRepository;
 	
 	public String askUsername(long accountID) {
+		
+		List<Accounts> allAccounts = accountsRepository.findAll();
+		System.out.println("service: " + allAccounts);
 		
 		String username = "";
 		
@@ -25,6 +26,8 @@ public class AccountsService {
 			}
 			else {continue;}
 		}
+		System.out.println("service: " + username);
 		return username;
+		
 	}
 }
