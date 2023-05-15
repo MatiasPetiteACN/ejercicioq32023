@@ -84,4 +84,20 @@ public class Accounts implements Serializable {
 		return accountID;
 	}
 
+	public double getDeuda() {
+		return deuda;
+	}
+
+	public void setDeuda(double deuda) {
+		this.deuda = deuda;
+	}
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
+	}
+
 }

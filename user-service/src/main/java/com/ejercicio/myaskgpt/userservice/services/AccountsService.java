@@ -2,6 +2,8 @@ package com.ejercicio.myaskgpt.userservice.services;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.springframework.stereotype.Service;
 
 import com.ejercicio.myaskgpt.userservice.entities.Accounts;
@@ -16,6 +18,7 @@ public class AccountsService {
 		
 		List<Accounts> allAccounts = accountsRepository.findAll();
 		System.out.println("service: " + allAccounts);
+		JOptionPane.showMessageDialog(null, allAccounts);
 		
 		String username = "";
 		
@@ -27,6 +30,7 @@ public class AccountsService {
 			else {continue;}
 		}
 		System.out.println("service: " + username);
+		JOptionPane.showMessageDialog(null, "service: " + username);
 		return username;
 		
 	}
