@@ -1,5 +1,7 @@
 package com.ejercicio.myaskgpt.main.entities;
 
+import java.util.List;
+
 public class User {
 	
 
@@ -10,6 +12,8 @@ public class User {
 	private String password;
 	
 	private double debt;
+	
+	private List<Role> roles;
 
 	private boolean enabled;
 
@@ -51,6 +55,14 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 	
