@@ -1,16 +1,16 @@
 package com.ejercicio.myaskgpt.main.services;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ejercicio.myaskgpt.main.clients.UserClient;
-import com.ejercicio.myaskgpt.main.entities.Pair;
 import com.ejercicio.myaskgpt.main.entities.User;
+import com.ejercicio.myaskgpt.main.entities.dto.UserDTODebt;
 
 @Service
 public class UserService {
@@ -25,6 +25,8 @@ public class UserService {
 	@Autowired
 	RestTemplate restTemplate;
 	
+	@Autowired
+	ModelMapper modelMapper;
 	//metodo hacer respuesta, recibe una pregunta, la busca en el allPares y devuelve la respuesta asociada 
 	//si no la encuentra devuelve excepcion(hacer)
 	//Mejorar con un contains? --->Si
@@ -54,14 +56,16 @@ public class UserService {
 		return pair.getAnswer();
 	}*/
 	
-	public User userRequest(long userID) {
+	public UserDTODebt userDebtRequest(long userID) {
 		
 		Map<String, Long> pathVariables = new HashMap<String, Long>();
 		pathVariables.put("userID", userID);
 
 		User user = restTemplate.getForObject("http://myaskgpt-user-service/api/accounts/user/{userID}", User.class, pathVariables);
 		
-		return user;
+		UserDTODebt userDTODebt = modelMapper.map(user, UserDTODebt.class);
+		
+		return userDTODebt;
 		
 	}
 	

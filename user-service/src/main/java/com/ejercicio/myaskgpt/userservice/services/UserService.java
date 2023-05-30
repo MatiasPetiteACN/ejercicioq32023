@@ -32,4 +32,9 @@ public class UserService {
 		return username;
 		
 	}
+	
+	public User userRequest(long userID) {
+		
+		return userRepository.findByUserID(userID);
+	}
 }

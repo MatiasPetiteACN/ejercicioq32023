@@ -19,12 +19,7 @@ public class UserEndpoints {
 	@GetMapping("/user/{userID}")
 	public User userRequest(@PathVariable long userID) {
 		
-		User output = new User();
-		output.setUserID(userID);
-		output.setUsername(userService.askUsername(userID));
-		output.setPassword("[REDACTED]");
-		System.out.println("endp: " + output.getUsername() + " ID " + output.getUserID());
-		return output;
+		return userService.userRequest(userID);
 	}
 	
 }
