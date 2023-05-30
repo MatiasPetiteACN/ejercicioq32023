@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="roles")
-public class Roles {
+public class Role {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class Roles {
 	@Column
 	private String accessType;
 
-	public Roles(String accessType) {
+	public Role(String accessType) {
 		super();
 		this.accessType = accessType;
 	}

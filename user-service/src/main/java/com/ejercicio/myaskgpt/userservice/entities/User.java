@@ -17,15 +17,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="accounts")
-public class Accounts implements Serializable {
+@Table(name="users")
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private long accountID;
+	private long userID;
 
 	@Column
 	private String username;
@@ -34,24 +34,24 @@ public class Accounts implements Serializable {
 	private String password;
 	
 	@Column
-	private double deuda;
+	private double debt;
 
 	@Column
 	private boolean enabled;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
-	@JoinTable(name = "accounts_roles", joinColumns = @JoinColumn(name = "accountID"), inverseJoinColumns = @JoinColumn(name = "rolesID"), uniqueConstraints = {
-			@UniqueConstraint(columnNames = {"accountID", "rolesID"})})
-	private List<Roles> roles;
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userID"), inverseJoinColumns = @JoinColumn(name = "roleID"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = {"userID", "roleID"})})
+	private List<Role> roles;
 
-	public Accounts(String username, String password) {
+	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.enabled = true;
 	}
 	
-	public Accounts() {
+	public User() {
 		super();
 		this.enabled = true;
 	}
@@ -80,24 +80,28 @@ public class Accounts implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public long getAccountID() {
-		return accountID;
+	public long getUserID() {
+		return userID;
 	}
 
-	public double getDeuda() {
-		return deuda;
+	public double getDebt() {
+		return debt;
 	}
 
-	public void setDeuda(double deuda) {
-		this.deuda = deuda;
+	public void setDebt(double debt) {
+		this.debt = debt;
 	}
 
-	public List<Roles> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Roles> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
 	}
 
 }
