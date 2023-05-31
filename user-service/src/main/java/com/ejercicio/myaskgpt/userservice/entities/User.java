@@ -20,7 +20,8 @@ import jakarta.persistence.UniqueConstraint;
 @Table(name="users")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -3909697674066528298L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +41,13 @@ public class User implements Serializable {
 	private boolean enabled;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userID"), inverseJoinColumns = @JoinColumn(name = "roleID"), uniqueConstraints = {
-			@UniqueConstraint(columnNames = {"userID", "roleID"})})
+	@JoinTable(name = "user_role",
+				joinColumns = @JoinColumn(name = "users_userID"), 
+				inverseJoinColumns = @JoinColumn(name = "roles_roleID"), 
+				uniqueConstraints = {@UniqueConstraint(columnNames = {"users_userID", "roles_roleID"})}
+				)
 	private List<Role> roles;
+	
 
 	public User(String username, String password) {
 		super();

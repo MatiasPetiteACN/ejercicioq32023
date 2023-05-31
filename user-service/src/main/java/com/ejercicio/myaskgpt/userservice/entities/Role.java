@@ -1,5 +1,7 @@
 package com.ejercicio.myaskgpt.userservice.entities;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +11,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="roles")
-public class Role {
+public class Role implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4027272062660029455L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
@@ -18,9 +25,12 @@ public class Role {
 	
 	@Column
 	private String accessType;
-
-	public Role(String accessType) {
+	
+	public Role() {
 		super();
+	}
+	
+	public Role(String accessType) {
 		this.accessType = accessType;
 	}
 
