@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ejercicio.myaskgpt.main.clients.UserClient;
 import com.ejercicio.myaskgpt.main.entities.dto.UserDTODebt;
+import com.ejercicio.myaskgpt.main.entities.dto.UserDTORole;
 import com.ejercicio.myaskgpt.main.services.UserService;
 
 @RestController
@@ -25,17 +26,22 @@ public class UserController {
 	@Autowired
 	UserClient userClient;
 	
-	@GetMapping("/userRequest/{userID}")
-	public ResponseEntity<UserDTODebt> userRequest(@PathVariable long userID){
+	//mapping de usuario:deuda
+	@GetMapping("/{userID}/debtRequest")
+	public ResponseEntity<UserDTODebt> userDebtRequest(@PathVariable long userID){
 
 		return new ResponseEntity<>(userService.userDebtRequest(userID), HttpStatus.OK);
 	}
 	
-	
+	@GetMapping("/{userID}/roleRequest")
+	public ResponseEntity<UserDTORole> userRoleRequest(@PathVariable long userID){
+
+		return new ResponseEntity<>(userService.userRoleRequest(userID), HttpStatus.OK);
+	}
 	//mapping de usuario:preguntas
 	
 	
-	//mapping de usuario:deuda
+	
 	
 	//
 }
