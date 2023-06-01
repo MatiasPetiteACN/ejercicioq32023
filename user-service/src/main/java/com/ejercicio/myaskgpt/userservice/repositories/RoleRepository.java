@@ -8,4 +8,6 @@ import com.ejercicio.myaskgpt.userservice.entities.Role;
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long>{
 
+	
+	public Role findByRoleID(long roleID);
 }

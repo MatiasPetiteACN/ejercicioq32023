@@ -50,6 +50,7 @@ public class UserService {
 			}
 			else {continue;}
 		}
+		userDebt = userDebt + 100;
 		return pair.getAnswer();
 	}
 	

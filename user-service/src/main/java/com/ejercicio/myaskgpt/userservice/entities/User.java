@@ -49,10 +49,11 @@ public class User implements Serializable {
 	private List<Role> roles;
 	
 
-	public User(String username, String password) {
+	public User(String username, String password, Role role) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.roles.add(role);
 		this.enabled = true;
 	}
 	

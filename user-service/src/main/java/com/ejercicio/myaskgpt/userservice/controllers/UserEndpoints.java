@@ -3,15 +3,21 @@ package com.ejercicio.myaskgpt.userservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejercicio.myaskgpt.userservice.entities.Role;
 import com.ejercicio.myaskgpt.userservice.entities.User;
+import com.ejercicio.myaskgpt.userservice.repositories.RoleRepository;
 import com.ejercicio.myaskgpt.userservice.services.UserService;
 
 @RestController
 @RequestMapping("/api/accounts/")
 public class UserEndpoints {
+	
+	@Autowired
+	RoleRepository roleRepository;
 	
 	@Autowired
 	UserService userService;
@@ -22,4 +28,19 @@ public class UserEndpoints {
 		return userService.userRequest(userID);
 	}
 	
+	@GetMapping("/username/{username}")
+	public User findByUsername(@PathVariable String username) {
+		
+		return userService.findByUsername(username);
+	}
+	
+	@PostMapping("createUser/{username}/{password}/{roleID}")
+	public void createUser(@PathVariable String username, @PathVariable String password, @PathVariable int roleID) {
+		Role userRole = roleRepository.findByRoleID(roleID);
+		
+		User user = new User(username, password, userRole);
+		
+		userService.save(user);
+		
+	}
 }

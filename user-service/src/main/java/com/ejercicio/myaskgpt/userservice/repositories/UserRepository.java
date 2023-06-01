@@ -13,7 +13,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	public User findByUserID(long userID);
 	
-	public User findByUsername(long userID);
+	public User findByUsername(String username);
 	
 	public List<User> findAll();
 	
