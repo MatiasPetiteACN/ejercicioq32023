@@ -19,24 +19,24 @@ import com.ejercicio.myaskgpt.securityserver.entities.User;
 @Service
 public class AuthenticationService implements UserDetailsService{
 
-	private Logger log = LoggerFactory.getLogger(AuthenticationService.class);
+	private final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 	
 	@Autowired
 	private UserClient userClient;	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		try{
 		User user = userClient.findByUsername(username);
-		if(user==null){
-			log.error("xxxx");
-			throw new UsernameNotFoundException("Error en el login, no existe el usuario "+username+" en el sistema");
-	}
-		List<GrantedAuthority> authorities = user.getRoles()
-				.stream()
-				.map(role-> new SimpleGrantedAuthority(role.getAccessType()))
-				.peek(authority -> log.info("Role: "+ authority.getAuthority()))
-				.collect(Collectors.toList());
-			log.info("Usuario autenticado: "+username);
+			List<GrantedAuthority> authorities = user.getRoles()
+					.stream()
+					.map(role-> new SimpleGrantedAuthority(role.getAccessType()))
+					.peek(authority -> log.info("Role: "+ authority.getAuthority()))
+					.collect(Collectors.toList());
+			log.info("User authenticated: "+username);
 			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(),true,true ,true ,authorities);
+		}
+		catch(Exception e){
+		throw new UsernameNotFoundException("No "+username+" account was found in the system.");}
 		}
 }

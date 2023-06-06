@@ -1,33 +1,46 @@
 package com.ejercicio.myaskgpt.securityserver;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
-public class SpringConfig extends WebSecurityConfigurerAdapter{
-	//inyectamos el servicio de usuario que creamos anteriormente (p. 16)
-	@Autowired
-	private UserDetailsService accountService;
-	
-	//Agregamos al container un bean que encripte las pass, para poder pasárselo a la f° siguiente
+import javax.sql.DataSource;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
+public class SpringConfig {
 	@Bean
-	public static BcrypPasswordEncoder passwordEncoder(){
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+				.authorizeHttpRequests((auth) -> auth
+						.requestMatchers("/api/user/roleRequest","/api/user/debtRequest" ).authenticated()
+						.requestMatchers("/api/accounts/user").permitAll()
+				)
+				.httpBasic(withDefaults());
+		return http.build();
+	}
+	@Bean
+	public UserDetailsService userDetailsService(DataSource dataSource){
+		return new JdbcUserDetailsManager(dataSource);
+	}
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				.addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
+				.build();
+	}
+	@Bean
+	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
-	//creamos la f° más importante de esta clase, que se encarga de encriptar las pass.
-	@Override
-	@Autowired
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(this.usuarioService).passwordEnconder(passwordEncoder());
-	}
-	//Agregamos al container un bean con el authenticationManager
-	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception{
-		return super.authenticationManager();
-	}
-
 }
