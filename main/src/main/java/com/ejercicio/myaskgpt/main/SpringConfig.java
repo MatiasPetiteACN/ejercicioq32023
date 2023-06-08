@@ -1,5 +1,6 @@
 package com.ejercicio.myaskgpt.main;
 
+import feign.form.FormEncoder;
 import org.modelmapper.ModelMapper;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -18,5 +19,10 @@ public class SpringConfig {
 	@Bean
 	public ModelMapper modelMapper() {
 	    return new ModelMapper();
+	}
+
+	@Bean
+	public FormEncoder encoder() {
+		return new FormEncoder();
 	}
 }

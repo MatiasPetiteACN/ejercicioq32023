@@ -1,11 +1,7 @@
 package com.ejercicio.myaskgpt.userservice.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ejercicio.myaskgpt.userservice.entities.Role;
 import com.ejercicio.myaskgpt.userservice.entities.User;
@@ -41,6 +37,23 @@ public class UserEndpoints {
 		User user = new User(username, password, userRole);
 		
 		userService.save(user);
-		
+	}
+
+	@PutMapping("user/{username}/billUser/{amount}")
+	public void billUser(@PathVariable String username, @PathVariable double amount){
+		User user = userService.findByUsername(username);
+
+		user.setDebt(user.getDebt() + amount);
+
+		userService.save(user);
+	}
+
+	@PutMapping("user/{username}/pay/{amount}")
+	public void userPay(@PathVariable String username, @PathVariable double amount){
+		User user = userService.findByUsername(username);
+
+		user.setDebt(user.getDebt() - amount);
+
+		userService.save(user);
 	}
 }
