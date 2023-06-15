@@ -1,7 +1,6 @@
 package com.ejercicio.myaskgpt.main.services;
 
 import com.ejercicio.myaskgpt.main.entities.User;
-import com.ejercicio.myaskgpt.main.entities.dto.UserDTODebt;
 import com.ejercicio.myaskgpt.main.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class BillingService {
+public class DebtService {
 
     @Autowired
     RestTemplate restTemplate;
@@ -29,7 +28,6 @@ public class BillingService {
             debt = debt + amount;
 
             user.setDebt(debt);
-
         }
         catch (Exception e){
             throw new UserNotFoundException("WHO DAT! IDENTIFY YOUSSELF, NIGGA!");
