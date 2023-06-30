@@ -19,13 +19,14 @@ import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@EnableWebSecurity
 @Configuration
 public class SpringConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((auth) -> auth
-						.requestMatchers("/api/user/roleRequest","/api/user/debtRequest" ).authenticated()
+						.requestMatchers("/api/user/{userID}/roleRequest","/api/user/{userID}/debtRequest" ).authenticated()
 						.requestMatchers("/api/accounts/user").permitAll()
 				)
 				.httpBasic(withDefaults());
