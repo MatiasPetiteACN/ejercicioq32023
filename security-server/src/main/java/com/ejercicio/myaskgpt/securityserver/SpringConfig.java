@@ -8,7 +8,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -22,11 +21,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @Configuration
 public class SpringConfig {
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.authorizeHttpRequests((auth) -> auth
-						.requestMatchers("/api/user/{userID}/roleRequest","/api/user/{userID}/debtRequest" ).authenticated()
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/api/user/*/roleRequest","/api/user/*/debtRequest" ).authenticated()
 						.requestMatchers("/api/accounts/user").permitAll()
 				)
 				.httpBasic(withDefaults());
@@ -41,7 +41,7 @@ public class SpringConfig {
 	public DataSource dataSource() {
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
-				.addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
+				.addScript("data.sql")
 				.build();
 	}
 	@Bean

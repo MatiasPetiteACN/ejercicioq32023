@@ -8,8 +8,7 @@ import com.ejercicio.myaskgpt.userservice.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
-	@Autowired
+
 	UserRepository userRepository;
 	
 	public void save(User user) {
