@@ -7,6 +7,7 @@ import com.ejercicio.myaskgpt.main.services.DebtService;
 import com.ejercicio.myaskgpt.main.services.PairService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,12 @@ import com.ejercicio.myaskgpt.main.services.UserService;
 public class UserController {
 //rest controller para que se pueda levantar desde postman
 
-	UserService userService;
-	PairService pairService;
-	DebtService debtService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private PairService pairService;
+	@Autowired
+	private DebtService debtService;
 
 	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -46,7 +50,7 @@ public class UserController {
 	@GetMapping("/{userID}/ask/{question}")
 	public ResponseEntity<String> askQuestion(@PathVariable long userID, @PathVariable String question){
 		try{
-			String answer = pairService.findByPregunta(question).getAnswer();
+			String answer = pairService.findByQuestion(question).getAnswer();
 			debtService.billingService(userID, CostEnums.valueOfQuestion());
 			return ResponseEntity.ok(answer);
 		} catch (UserNotFoundException | QuestionNotFoundException e) {

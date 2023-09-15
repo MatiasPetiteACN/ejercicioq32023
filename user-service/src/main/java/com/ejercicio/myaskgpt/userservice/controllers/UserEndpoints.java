@@ -4,13 +4,17 @@ import com.ejercicio.myaskgpt.userservice.entities.Role;
 import com.ejercicio.myaskgpt.userservice.entities.User;
 import com.ejercicio.myaskgpt.userservice.repositories.RoleRepository;
 import com.ejercicio.myaskgpt.userservice.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts/")
 public class UserEndpoints {
 
+	@Autowired
 	RoleRepository roleRepository;
+
+	@Autowired
 	UserService userService;
 
 	@GetMapping("/user/{userID}")
